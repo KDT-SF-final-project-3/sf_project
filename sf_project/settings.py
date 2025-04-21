@@ -9,8 +9,13 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
-
+import environ
 from pathlib import Path
+
+# 환경 변수 설정
+env = environ.Env()
+# .env 파일 읽기
+environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -84,8 +89,12 @@ WSGI_APPLICATION = 'sf_project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'SmartFactory',
+        'USER': 'root',
+        'PASSWORD': '0714',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
     }
 }
 
@@ -114,11 +123,12 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Seoul'  # 서울 시간을 기본 시간대 설정
 
 USE_I18N = True
 
-USE_TZ = True
+USE_TZ = False  # 로컬 시간 사용 (시간대 변환 비활성화)
+
 
 
 # Static files (CSS, JavaScript, Images)
