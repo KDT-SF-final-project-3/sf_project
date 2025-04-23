@@ -42,7 +42,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'tempApp', # 앱 이름
+    'rest_framework', # REST API 추가
+    'tempApp', # 테스트 앱
+    'signup_app', # 회원가입 앱
     'corsheaders', # cors 추가
 ]
 

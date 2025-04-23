@@ -1,24 +1,26 @@
 import "./App.css";
 import React, { useState } from "react";
 import axios from "axios";
+import FetchButton from "./Components/Table/FetchButton";
+import DataTable from "./Components/Table/DataTable";
 
 function App() {
-  const [text, setText] = useState("없음");
-  
-  const clicked = () => {
-    axios
-      .get("http://127.0.0.1:8000", {
-        params: {
-          abc: "가나다",
-        },
+  const [data, setData] = useState([]);
+
+  const fetchData = async () => {
+    axios.get('http://127.0.0.1:8000/temp/api/data/')
+      .then((res) => {
+          console.log("받은 데이터:", res.data);
+          setData(res.data);
       })
-      .then((response) => setText(JSON.stringify(response.data)));
+      .catch((err) => console.error("에러 발생:", err));
   };
 
   return (
     <div>
-      <h1>{text}</h1>
-      <button onClick={clicked}>클릭</button>
+      <h1>테스트 테이블 데이터 확인</h1>
+      <FetchButton onFetch={fetchData} />
+      <DataTable data={data}/>
     </div>
   );
 }
