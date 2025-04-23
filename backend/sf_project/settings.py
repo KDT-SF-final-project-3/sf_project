@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework', # REST API 추가
-
+    'rest_framework.authtoken', # 자동토큰 추가
+    'accounts', # 계정 관리(로그인, 로그아웃, 회원가입) 앱
     
     'corsheaders', # cors 추가
 ]
