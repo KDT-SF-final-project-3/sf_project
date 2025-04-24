@@ -4,16 +4,20 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import MainPage from "./pages/MainPage";
 import LoginPage from "./pages/LoginPage";
+import LogoutPage from "./pages/LogoutPage";
 import RegisterPage from "./pages/RegisterPage";
-
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<MainPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/logout" element={<LogoutPage />} />
+
+        {/* 보호된 페이지 */}
+        <Route path="/" element={<ProtectedRoute element={<MainPage />} />} />
       </Routes>
     </Router>
   );
