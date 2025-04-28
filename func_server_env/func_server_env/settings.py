@@ -31,21 +31,19 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    # "django.contrib.admin",
-    # "django.contrib.auth",
-    # "django.contrib.contenttypes",
-    # "django.contrib.sessions",
-    # "django.contrib.messages",
-    # "django.contrib.staticfiles",
-    'django.contrib.contenttypes',
-    'sensor',
-    'rest_framework',
-
+    # "django.contrib.admin",             # Admin은 꺼도 됨
+    "django.contrib.auth",                 # ✅ 반드시 활성화해야 함 (Permission 문제 해결)
+    "django.contrib.contenttypes",          # ✅ 같이 필요함
+    "django.contrib.sessions",              # 세션
+    # "django.contrib.messages",            # 필요 없으면 주석처리 OK
+    # "django.contrib.staticfiles",         # 필요 없으면 주석처리 OK
+    "sensor",                               # 본인 만든 앱
+    "rest_framework",                       # DRF
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    # "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     # "django.contrib.auth.middleware.AuthenticationMiddleware",

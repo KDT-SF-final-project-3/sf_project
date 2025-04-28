@@ -2,7 +2,7 @@ import serial
 import requests
 import time
 
-ser = serial.Serial('COM5', 9600, timeout=2)  # 포트 번호는 환경에 맞게 조정
+ser = serial.Serial('COM4', 9600, timeout=2)  # 포트 번호는 환경에 맞게 조정
 url = 'http://127.0.0.1:8000/api/sensor/'
 
 # 변수 초기화
