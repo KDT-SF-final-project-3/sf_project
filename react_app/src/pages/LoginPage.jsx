@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 
-const LoginPage = () => {
+export default function LoginPage () {
     const [formData, setFormData] = useState({
         userID: "",
         password: "",
@@ -94,5 +95,3 @@ const LoginPage = () => {
         </div>
     );
 };
-
-export default LoginPage;

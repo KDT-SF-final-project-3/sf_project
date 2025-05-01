@@ -14,14 +14,14 @@ class LoginView(APIView):
         # userID로 사용자 찾기
         user = CustomUser.objects.filter(userID=userID).first()
         
-        if user and user.is_approved: # 사용자가 존재하고 승인된 경우
+        if user and user.is_approved:
             if user.check_password(password):
                 refresh = RefreshToken.for_user(user)
                 access_token = refresh.access_token
                 return Response({
                     'access_token': str(access_token),
                     'refresh_token': str(refresh),
-                    'is_approved': user.is_approved
+                    'is_approved': user.is_approved  # ✅ 이거 꼭 추가!
                 }, status=status.HTTP_200_OK)
             else:
                 return Response({"detail": "잘못된 비밀번호입니다."}, status=status.HTTP_400_BAD_REQUEST)
