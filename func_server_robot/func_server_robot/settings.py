@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     'webcam',
-
+    'manual_drive',
+    'auto_drive',
 ]
 
 MIDDLEWARE = [
@@ -74,10 +75,16 @@ WSGI_APPLICATION = "func_server_robot.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+
+
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'smartfactory',
+        'USER': 'root',
+        'PASSWORD': '0000',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
 

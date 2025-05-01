@@ -3,9 +3,11 @@
 from django.http import StreamingHttpResponse
 import cv2
 from ultralytics import YOLO  # <-- YOLOv8 불러오기
+import torch
 
 # YOLO 모델 로딩 (가장 작은 모델 yolov8n.pt 사용)
-model = YOLO('yolov8n.pt')  # 'n'은 nano버전(가볍고 빠름)
+device = 'cuda' if torch.cuda.is_available() else 'cpu'
+model = YOLO('yolov8n.pt').to(device)
 
 def generate_camera_stream():
     cap = cv2.VideoCapture(0)  # 0번 웹캠
