@@ -43,9 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework', # REST API 추가
-
-    
-    'corsheaders', # cors 추가
+    'corsheaders',  # React 연동 시 필요
+    'control',      # 우리가 만든 앱
 ]
 
 MIDDLEWARE = [
@@ -59,6 +58,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
 
 # CORS 추가
 CORS_ORIGIN_WHITELIST = (
