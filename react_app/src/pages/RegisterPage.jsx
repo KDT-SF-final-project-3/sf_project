@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
+import {Input, Button, message} from 'antd';
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
@@ -13,7 +15,7 @@ export default function RegisterForm () {
         position: "",
     });
 
-    const [message, setMessage] = useState("");
+    const [messageApi, contextHolder] = message.useMessage();
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -24,37 +26,38 @@ export default function RegisterForm () {
         e.preventDefault();
     try {
         const res = await axios.post("http://127.0.0.1:8000/api/register/", formData);
-        setMessage("✅ 회원가입 성공! 🎉");
+        messageApi.success("회원가입 성공! 🎉");
         console.log("서버 응답:", res.data);
 
         // 회원가입 성공 후 로그인 페이지로 리다이렉트
         setTimeout(() => {
             navigate("/login");  // 로그인 페이지로 이동
-        }, 2000);  // 2초 후 로그인 페이지로 이동 (2초 딜레이로 회원가입 성공 메시지를 볼 수 있도록)
+        }, 1500);  // 1.5초 후 로그인 페이지로 이동 (딜레이로 회원가입 성공 메시지를 볼 수 있도록)
 
 
     } catch (error) {
         console.error("회원가입 실패:", error.response.data);
-        setMessage("❌ 회원가입 실패! 😢");
+        messageApi.error("회원가입 실패! 😢");
     }
     };
 
     return (
         <MainDiv>
+          {contextHolder}
             <FormBox>
                 <Title>Sign Up</Title>
                 <StyledForm onSubmit={handleSubmit}>
-                    <input name="emp_no" placeholder="직번" onChange={handleChange} />
-                    <input name="name" placeholder="이름" onChange={handleChange} />
-                    <input name="userID" placeholder="아이디" onChange={handleChange} />
-                    <input name="password" type="password" placeholder="비밀번호" onChange={handleChange} />
-                    <input name="email" placeholder="이메일" onChange={handleChange} />
-                    <input name="position" placeholder="직급" onChange={handleChange} />
-                    <button type="submit">가입하기</button>
+                    <Input name="emp_no" placeholder="직번"  onChange={handleChange} />
+                    <Input name="name" placeholder="이름"  onChange={handleChange} />
+                    <Input name="userID" placeholder="아이디"  onChange={handleChange} />
+                    <Input.Password name="password" placeholder="비밀번호" 
+                      iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)} 
+                      onChange={handleChange} value={formData.password}/>
+                    <Input name="email" placeholder="이메일"  onChange={handleChange} />
+                    <Input name="position" placeholder="직급"  onChange={handleChange} />
+                    <Button htmlType="submit" type="primary">회원가입</Button>
                 </StyledForm>
             </FormBox>
-
-            {message && <p>{message}</p>}
     </MainDiv>
     );
 };
@@ -94,15 +97,15 @@ const StyledForm = styled.form`
   width: 100%;
   gap: 10px;
 
-  input, button {
+  input, button, .ant-input-password {
     padding: 10px;
+    height: 48px;
     font-size: 16px;
+    line-height: 48px; 
   }
 
-  button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    cursor: pointer;
+  .ant-input-password input {
+    height: 100%;
+    line-height: 48px;
   }
 `;
