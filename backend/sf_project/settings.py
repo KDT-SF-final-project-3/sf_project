@@ -45,8 +45,9 @@ INSTALLED_APPS = [
     'rest_framework', # REST API 추가
     'rest_framework.authtoken', # 자동토큰 추가
     'accounts', # 계정 관리(로그인, 로그아웃, 회원가입) 앱
-    
+    'control',  # 로봇팔 제어
     'corsheaders', # cors 추가
+
 ]
 
 MIDDLEWARE = [
@@ -60,6 +61,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
 
 # CORS 추가
 CORS_ORIGIN_WHITELIST = (
@@ -95,7 +97,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'SmartFactory',
         'USER': 'root',
-        'PASSWORD': '0714',
+        'PASSWORD': '0000',
         'HOST': '127.0.0.1',
         'PORT': '3306',
     }

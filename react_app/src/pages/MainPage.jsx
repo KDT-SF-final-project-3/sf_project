@@ -1,9 +1,11 @@
+// src/pages/MainPage.jsx
 import React from "react";
 import styled from "styled-components";
 import { Layout as AntLayout, Menu } from 'antd';
 import { HomeOutlined, UserOutlined, LogoutOutlined } from '@ant-design/icons';
 import { useNavigate } from "react-router-dom";
 import { logout } from "../utils/auth";
+import WebcamViewer from "../components/WebcamViewer"; 
 
 const { Header: AntHeader, Sider: AntSider, Content: AntContent, Footer: AntFooter } = AntLayout;
 
@@ -48,6 +50,7 @@ export default function MainPage() {
 
                 <Content>
                     <ContentBox>
+                      <WebcamViewer />
                         <p>여기는 로그인한 사용자만 접근할 수 있어요.</p>
                     </ContentBox>
                 </Content>
