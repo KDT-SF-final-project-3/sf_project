@@ -79,7 +79,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'smartfactory',
         'USER': 'root',
-        'PASSWORD': '0000',
+        'PASSWORD': '0714',
         'HOST': 'localhost',
         'PORT': '3306',
     }

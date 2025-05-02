@@ -6,6 +6,7 @@ import { HomeOutlined, UserOutlined, LogoutOutlined } from '@ant-design/icons';
 import { useNavigate } from "react-router-dom";
 import { logout } from "../utils/auth";
 import WebcamViewer from "../components/WebcamViewer"; 
+import ControlPanel from "../components/ControlPanel";
 
 const { Header: AntHeader, Sider: AntSider, Content: AntContent, Footer: AntFooter } = AntLayout;
 
@@ -51,6 +52,8 @@ export default function MainPage() {
                 <Content>
                     <ContentBox>
                       <WebcamViewer />
+                      <h1>로봇 제어 패널</h1>
+                      <ControlPanel />
                         <p>여기는 로그인한 사용자만 접근할 수 있어요.</p>
                     </ContentBox>
                 </Content>
