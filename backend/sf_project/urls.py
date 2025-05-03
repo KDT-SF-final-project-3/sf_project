@@ -19,6 +19,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('control.urls')),  # /api/control/?cmd=...
-
+    path('api/control/', include('control.urls')),  # /api/control/?cmd=...
+    path('print_db/', include('print_db.urls')),  # /api/get-tables/로 접근 가능
 ]

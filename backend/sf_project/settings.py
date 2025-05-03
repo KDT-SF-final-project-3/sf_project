@@ -42,22 +42,23 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework', # REST API 추가
-    'corsheaders',  # React 연동 시 필요
-    'control',      # 우리가 만든 앱
+    'rest_framework',        # REST API
+    'corsheaders',           # CORS 지원
+    'control',               # 사용자 정의 앱
+    'print_db',              # 사용자 정의 앱
 ]
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',  # CORS 추가
-    'django.middleware.common.CommonMiddleware',  # CORS 추가
+    'corsheaders.middleware.CorsMiddleware',        # CORS 미들웨어 (반드시 맨 위에 가까이 배치)
+    'django.middleware.common.CommonMiddleware',    # 중복 제거
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
 
 
 # CORS 추가
