@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'accounts', # 계정 관리(로그인, 로그아웃, 회원가입) 앱
     'control',  # 로봇팔 제어
     'corsheaders', # cors 추가
+    'print_db',
 
 ]
 

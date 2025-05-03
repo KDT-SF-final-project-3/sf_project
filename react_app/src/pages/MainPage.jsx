@@ -2,11 +2,15 @@
 import React from "react";
 import styled from "styled-components";
 import { Layout as AntLayout, Menu } from 'antd';
-import { HomeOutlined, UserOutlined, LogoutOutlined } from '@ant-design/icons';
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import { HomeOutlined, UserOutlined, HistoryOutlined, BarChartOutlined, LogoutOutlined } from '@ant-design/icons';
 import { useNavigate } from "react-router-dom";
 import { logout } from "../utils/auth";
-import WebcamViewer from "../components/WebcamViewer"; 
-import ControlPanel from "../components/ControlPanel";
+
+import OperationHistoryPage from './OperationHistoryPage';
+import EnvironmentHistoryPage from './EnvironmentHistoryPage';
+import AdminPage from './AdminPage';
+import HomePage from './HomePage';
 
 const { Header: AntHeader, Sider: AntSider, Content: AntContent, Footer: AntFooter } = AntLayout;
 
@@ -27,10 +31,16 @@ export default function MainPage() {
                 </div>
                 <Menu mode="inline" defaultSelectedKeys={['1']} style={{ borderRight: 0 }}>
                     <Menu.Item key="1" icon={<HomeOutlined />}>
-                        홈
+                        <Link to="/">홈</Link>
                     </Menu.Item>
-                    <Menu.Item key="2" icon={<UserOutlined />}>
-                        사용자 관리
+                    <Menu.Item key="2" icon={<HistoryOutlined />}>
+                        <Link to="/operation">작동 이력</Link>
+                    </Menu.Item>
+                    <Menu.Item key="3" icon={<BarChartOutlined />}>
+                        <Link to="/environment">환경 이력</Link>
+                    </Menu.Item>
+                    <Menu.Item key="4" icon={<UserOutlined />}>
+                        <Link to="/admin">관리자 페이지</Link>
                     </Menu.Item>
                 </Menu>
 
@@ -49,14 +59,15 @@ export default function MainPage() {
                     <Title>3 Factorial</Title>
                 </Header>
 
-                <Content>
-                    <ContentBox>
-                      <WebcamViewer />
-                      <h1>로봇 제어 패널</h1>
-                      <ControlPanel />
-                        <p>여기는 로그인한 사용자만 접근할 수 있어요.</p>
-                    </ContentBox>
+                <Content style={{ margin: '24px 16px 0', padding: 24, background: '#fff' }}>
+                    <Routes>
+                        <Route path="/" element={<HomePage />} />
+                        <Route path="/operation" element={<OperationHistoryPage />} />
+                        <Route path="/environment" element={<EnvironmentHistoryPage />} />
+                        <Route path="/admin" element={<AdminPage />} />
+                    </Routes>
                 </Content>
+
 
                 <Footer>© Smart Factory</Footer>
                 

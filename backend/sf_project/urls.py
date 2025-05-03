@@ -24,6 +24,8 @@ urlpatterns = [
     path('api/control/', include('control.urls')),  # /api/control/?cmd=...
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),  # 로그인
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),  # 토큰 재발급
+    path('printdb/', include('print_db.urls')),  # ✅ 여기 변경!
 
 
 ]
+
