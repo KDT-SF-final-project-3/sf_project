@@ -15,11 +15,11 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
-#from django.contrib import admin
+
+
+# 프로젝트 루트 urls.py
 from django.urls import path, include
 
 urlpatterns = [
-#    path("admin/", admin.site.urls),
-    path('api/', include('sensor.urls')),  # 최종 URL: /api/sensor/
-
+    path('printdb/', include('sensor.urls')),  # http://localhost:8000/printdb/table3/export/
 ]
