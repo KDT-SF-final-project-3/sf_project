@@ -1,26 +1,39 @@
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin # 기본 User 모델을 관리하는 관리자 클래스
-from .models import CustomUser # 직접 만든 사용자 모델 가져오기
+from .models import Employee, CustomUser
 
-class CustomUserAdmin(UserAdmin):
-    model = CustomUser
-    list_display = ('emp_no', 'name', 'userID', 'email', 'position', 'is_approved', 'is_staff')
-    list_filter = ('is_approved', 'position', 'is_staff')
+@admin.register(Employee)
+class EmployeeAdmin(admin.ModelAdmin):
+    list_display = ('emp_no', 'name', 'team', 'position')
+    search_fields = ('emp_no', 'name')
 
-    # 필드 그룹화
+@admin.register(CustomUser)
+class CustomUserAdmin(admin.ModelAdmin):
+    list_display = ('userID', 'email', 'name', 'position', 'is_approved', 'is_active', 'is_staff', 'last_login')
+    search_fields = ('userID', 'email', 'employee__name', 'employee__emp_no')
+    list_filter = ('is_approved', 'is_active', 'is_staff')
     fieldsets = (
-        (None, {'fields': ('emp_no', 'name', 'userID', 'email', 'password', 'position')}),
-        ('Permissions', {'fields': ('is_approved', 'is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
+        (None, {'fields': ('userID', 'password')}),
+        ('개인 정보', {'fields': ('email', 'employee')}),
+        ('권한', {'fields': ('is_approved', 'is_active', 'is_staff')}),
+        ('중요한 날짜', {'fields': ('last_login',)}),
     )
+    readonly_fields = ('last_login',)
+    ordering = ('userID',)
+    filter_horizontal = ()
+    # raw_id_fields = ('employee',) # ForeignKey를 raw ID 필드로 표시 (선택 사항)
 
-    # 새 유저 추가할때 필드
-    add_fieldsets = (
-        (None, {
-            'classes': ('wide',), # 유저 등록 폼의 입력창 너비를 넓게
-            'fields': ('emp_no', 'name', 'userID', 'email', 'position', 'password1', 'password2', 'is_approved', 'is_staff', 'is_superuser'),
-        }),
-    )
-    search_fields = ('userID', 'emp_no', 'name')
-    ordering = ('emp_no',)
+    def name(self, obj):
+        return obj.employee.name
+    name.short_description = '이름'
+    name.admin_order_field = 'employee__name'
 
-admin.site.register(CustomUser, CustomUserAdmin)
+    def position(self, obj):
+        return obj.employee.position
+    position.short_description = '직책'
+    position.admin_order_field = 'employee__position'
+
+    def save_model(self, request, obj, form, change):
+        # 사용자를 생성할 때 비밀번호를 해싱합니다.
+        if not obj.pk:
+            obj.set_password(form.cleaned_data['password'])
+        super().save_model(request, obj, form, change)
