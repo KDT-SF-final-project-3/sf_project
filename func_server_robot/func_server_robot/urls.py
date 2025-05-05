@@ -23,5 +23,8 @@ urlpatterns = [
     path('', include('webcam.urls')),  # <-- 여기 추가
     path('manual_drive/', include('manual_drive.urls')),
 
+    path('auto_drive/', include('auto_drive.urls')),  # auto_drive는 별도 경로로!
 
 ]
+
+

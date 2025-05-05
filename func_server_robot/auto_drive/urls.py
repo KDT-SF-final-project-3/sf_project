@@ -6,3 +6,4 @@ from . import views
 urlpatterns = [
     path('manual_drive/control/', views.control_command),
 ]
+
