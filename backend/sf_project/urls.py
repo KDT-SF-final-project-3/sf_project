@@ -26,6 +26,7 @@ urlpatterns = [
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),  # 로그인
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),  # 토큰 재발급
     path('printdb/', include('print_db.urls')),  # ✅ 여기 변경!
+    path('api/', include('accounts.urls')),  # ✅ 꼭 있어야 /api/login/ 인식 가능
 
 
 ]

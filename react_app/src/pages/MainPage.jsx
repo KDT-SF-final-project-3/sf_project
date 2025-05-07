@@ -2,9 +2,8 @@
 import React from "react";
 import styled from "styled-components";
 import { Layout as AntLayout, Menu } from 'antd';
-import { BrowserRouter as Route, Routes, Link } from 'react-router-dom';
+import { Route, Routes, Link, useNavigate } from 'react-router-dom';
 import { HomeOutlined, UserOutlined, HistoryOutlined, BarChartOutlined, LogoutOutlined } from '@ant-design/icons';
-import { useNavigate } from "react-router-dom";
 import { logout } from "../utils/auth";
 
 import OperationHistoryPage from './OperationHistoryPage';

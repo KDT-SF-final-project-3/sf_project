@@ -21,5 +21,7 @@ Including another URLconf
 from django.urls import path, include
 
 urlpatterns = [
+    path('api/', include('sensor.urls')),    # <- 이 부분이 핵심!
+
     path('printdb/', include('sensor.urls')),  # http://localhost:8000/printdb/table3/export/
 ]

@@ -33,3 +33,19 @@ def export_sensor_data(request):
         ])
 
     return response
+
+@api_view(['POST'])
+def receive_sensor_data(request):
+    print("✅ 요청 도착:", request.data)
+
+    data = request.data
+
+    SensorData.objects.create(
+        light=data.get('light'),
+        temperature=data.get('temperature'),
+        humidity=data.get('humidity'),
+        fan_status=data.get('fan_status'),
+        led_status=data.get('led_status')
+    )
+
+    return Response({'message': '데이터 저장 완료'})
