@@ -1,43 +1,53 @@
-# 모델데이터 JSON 변경, 모델 객체로 저장
 from rest_framework import serializers
 from .models import CustomUser, Employee
+from rest_framework.exceptions import ValidationError
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from rest_framework.exceptions import AuthenticationFailed
 
-
-# 모델 기반 자동 필드 생성
 class UserRegisterSerializer(serializers.ModelSerializer):
+    password2 = serializers.CharField(write_only=True)  # 비밀번호 확인
+
     class Meta:
         model = CustomUser
-        fields = ('emp_no', 'userID', 'password', 'email')
-        extra_kwargs = {'password': {'write_only': True}}
+        fields = ('emp_no', 'name', 'userID', 'password', 'password2', 'email', 'position')
+        extra_kwargs = {'password': {'write_only': True}, 
+                        'password2': {'write_only': True},
+                        'name': {'read_only': False},
+                        'position': {'read_only': False}
+        }
 
     def validate_emp_no(self, value):
+        # 1. Employee 테이블에서 직번 존재 여부 확인
         if not Employee.objects.filter(emp_no=value).exists():
-            raise serializers.ValidationError("존재하지 않는 직번입니다.")
+            raise ValidationError("존재하지 않는 직번입니다.")
+
+        # 2. CustomUser 테이블에서 동일한 직번이 사용되고 있는지 확인
+        if CustomUser.objects.filter(emp_no=value).exists():
+            raise ValidationError("이 직번은 이미 사용 중입니다.")
+
         return value
 
     def validate_userID(self, value):
+        # userID 중복 체크
         if CustomUser.objects.filter(userID=value).exists():
-            raise serializers.ValidationError("이미 존재하는 아이디입니다.")
+            raise ValidationError("이미 존재하는 아이디입니다.")
         return value
 
-    # 자동 암호화 처리 -> 유저 생성, DB 저장, 객체 리턴 
+    def validate(self, data):
+        # 비밀번호 확인
+        if data['password'] != data['password2']:
+            raise ValidationError("비밀번호가 다릅니다.")
+        return data
+
     def create(self, validated_data):
         emp_no = validated_data['emp_no']
-        employee = Employee.objects.get(emp_no=emp_no)
+        validated_data.pop('password2')
 
-        # 이름과 직책은 직원 테이블에서 가져옴
-        name = employee.name
-        position = employee.position
-
+        # 이름과 직책을 employee 테이블에서 가져옴
         user = CustomUser.objects.create_user(
-            emp_no=emp_no,
-            name=name,
             userID=validated_data['userID'],
             password=validated_data['password'],
             email=validated_data['email'],
-            position=position
+            emp_no=emp_no,
         )
         return user
     
