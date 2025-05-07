@@ -1,12 +1,15 @@
-import React from "react";
-import { Navigate } from "react-router-dom";
+import React from 'react';
+import { Navigate } from 'react-router-dom';
 
-// ProtectedRoute 컴포넌트는 인증된 사용자만 접근할 수 있는 페이지에 사용
-const ProtectedRoute = ({ element }) => {
-    const token = localStorage.getItem("access_token");
+const ProtectedRoute = ({ children }) => {
+  const isLoggedIn = localStorage.getItem("isLoggedIn");
 
-    // 인증된 사용자만 element를 렌더링하고, 그렇지 않으면 로그인 페이지로 리다이렉트
-    return token ? element : <Navigate to="/login" replace />;
+  if (isLoggedIn !== "true") {
+    // 로그인 상태가 아니면 로그인 페이지로 리다이렉트
+    return <Navigate to="/login" />;
+  }
+
+  return children;  // 로그인 상태일 경우 자식 컴포넌트 렌더링
 };
 
 export default ProtectedRoute;

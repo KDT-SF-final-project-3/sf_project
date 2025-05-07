@@ -9,10 +9,10 @@ class UserRegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
         fields = ('emp_no', 'name', 'userID', 'password', 'password2', 'email', 'position')
-        extra_kwargs = {'password': {'write_only': True}, 
+        extra_kwargs = {'password': {'write_only': True},
                         'password2': {'write_only': True},
-                        'name': {'read_only': False},
-                        'position': {'read_only': False}
+                        'name': {'read_only': True},  # create 메서드에서 Employee 정보로 채워지므로 읽기 전용
+                        'position': {'read_only': True}  # create 메서드에서 Employee 정보로 채워지므로 읽기 전용
         }
 
     def validate_emp_no(self, value):
@@ -39,7 +39,7 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         return data
 
     def create(self, validated_data):
-        emp_no_value = validated_data['emp_no']  # 예 "10001"
+        emp_no_value = validated_data.pop('emp_no')  # emp_no를 먼저 가져옴
         validated_data.pop('password2')
 
         try:
@@ -48,20 +48,17 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         except Employee.DoesNotExist:
             print(f"Employee NOT found in create with emp_no: '{emp_no_value}'")
             raise ValidationError("해당 직번의 직원 정보가 존재하지 않습니다.")
-        
-        name = employee.name
-        position = employee.position
 
         user = CustomUser.objects.create_user(
             userID=validated_data['userID'],
             password=validated_data['password'],
             email=validated_data['email'],
-            emp_no=employee,  # ForeignKey는 객체로
-            name=name,
-            position=position
+            emp_no=emp_no_value,  # CharField 이므로 문자열 직번 저장
+            name=employee.name,
+            position=employee.position
         )
         return user
-    
+
 # SimpleJWT 기본 토큰 로직 커스터마이징
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod

@@ -2,7 +2,7 @@
 from django.db import models
 
 class SensorData(models.Model):
-    timestamp = models.DateTimeField()
+    timestamp = models.DateTimeField(auto_now_add=True)
     light = models.FloatField(null=True, blank=True)
     temperature = models.FloatField(null=True, blank=True)
     humidity = models.FloatField(null=True, blank=True)

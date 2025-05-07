@@ -31,7 +31,7 @@ export default function RegisterForm() {
     const fetchInfo = async () => {
       if (empNoToCheck) {
         try {
-          const getRes = await axios.get(`http://127.0.0.1:8000/api/check-emp-no/?emp_no=${empNoToCheck}`);
+          const getRes = await axios.get(`http://127.0.0.1:8000/api/accounts/check-emp-no/?emp_no=${empNoToCheck}`);
           setFormData(prevFormData => ({
             ...prevFormData,
             name: getRes.data.name,
@@ -64,7 +64,7 @@ export default function RegisterForm() {
 
     // 간단한 형식 검사만 수행하거나, POST 요청을 통해 서버에서 1차 확인
     // 여기서는 POST 요청을 유지하고, 성공 시 empNoToCheck 상태를 업데이트
-    axios.post("http://127.0.0.1:8000/api/check-emp-no/", { emp_no: value })
+    axios.post("http://127.0.0.1:8000/api/accounts/check-emp-no/", { emp_no: value })
       .then(res => {
         setEmpNoError(res.data.message || "");
         if (res.data.message === "직원입니다.") {
@@ -89,7 +89,7 @@ export default function RegisterForm() {
           return;
       }
       try {
-          const res = await axios.post("http://127.0.0.1:8000/api/check-user-id/", { userID: value });
+          const res = await axios.post("http://127.0.0.1:8000/api/accounts/check-user-id/", { userID: value });
           setUserIDError(res.data.message || "");
       } catch (error) {
           console.error("아이디 확인 오류:", error.response?.data);
@@ -181,7 +181,7 @@ export default function RegisterForm() {
     console.log("Validation Passed. Submitting...");
     console.log("Form Data (on success):", formData);
     try {
-      const res = await axios.post("http://127.0.0.1:8000/api/register/", formData, {
+      const res = await axios.post("http://127.0.0.1:8000/api/accounts/register/", formData, {
         headers: {
           'Content-Type': 'application/json',
         }
@@ -261,35 +261,33 @@ export default function RegisterForm() {
   );
 }
 
-// 전체 배경 (배경 바깥쪽)
-export const MainDiv = styled.div`
+
+// 스타일 컴포넌트
+const MainDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #f0f0f0;  /* 배경색: 연한 회색 (예시) */
+  background-color: #f0f0f0;
 `;
 
-// 회원가입 박스 (안쪽 박스)
 const FormBox = styled.div`
-  background-color: white;   /* 폼 내부 색: 흰색 */
+  background-color: white;
   padding: 40px;
   border-radius: 10px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.1);  /* 그림자 */
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
   width: 400px;
   display: flex;
   flex-direction: column;
   align-items: center;
 `;
 
-// 제목 스타일
 const Title = styled.h2`
   font-size: 32px;
   color: #333;
   margin-bottom: 20px;
 `;
 
-// 폼 스타일
 const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
@@ -300,7 +298,7 @@ const StyledForm = styled.form`
     padding: 10px;
     height: 48px;
     font-size: 16px;
-    line-height: 48px; 
+    line-height: 48px;
   }
 
   .ant-input-password input {
@@ -310,10 +308,10 @@ const StyledForm = styled.form`
   }
 `;
 
-const ErrorMessage = styled.div`
+const ErrorMessage = styled('div', {
+  shouldForwardProp: (prop) => !['$isSuccess', '$isError'].includes(prop),
+})`
   color: red;
   font-size: 0.8rem;
-  ${props => props.$isSuccess && `
-    color: blue;
-  `}
+  ${(props) => props.$isSuccess && `color: blue;`}
 `;
