@@ -1,17 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import {Input, Button, message} from 'antd';
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export default function RegisterForm() {
   const [formData, setFormData] = useState({
       emp_no: "",
       userID: "",
       password: "",
-      password2: "", // 비밀번호 재입력 필드 추가
+      password2: "", 
       email: "",
+      name: "",      
+      position: "",
   });
 
   const [empNoError, setEmpNoError] = useState("");
@@ -23,19 +25,61 @@ export default function RegisterForm() {
   const [messageApi, contextHolder] = message.useMessage();
   const navigate = useNavigate();
 
-  const validateEmpNo = async (value) => {
-      setFormData({ ...formData, emp_no: value });
-      if (!value) {
-          setEmpNoError("필수 입력 정보입니다.");
-          return;
+  const [empNoToCheck, setEmpNoToCheck] = useState("");
+
+  useEffect(() => {
+    const fetchInfo = async () => {
+      if (empNoToCheck) {
+        try {
+          const getRes = await axios.get(`http://127.0.0.1:8000/api/check-emp-no/?emp_no=${empNoToCheck}`);
+          setFormData(prevFormData => ({
+            ...prevFormData,
+            name: getRes.data.name,
+            position: getRes.data.position,
+          }));
+        } catch (error) {
+          console.error("직원 정보 GET 요청 오류:", error.response?.data);
+          messageApi.error("직원 정보 로딩 실패");
+          setFormData(prevFormData => ({ ...prevFormData, name: "", position: "" }));
+        }
+      } else {
+        setFormData(prevFormData => ({ ...prevFormData, name: "", position: "" }));
       }
-      try {
-          const res = await axios.post("http://127.0.0.1:8000/api/users/check-emp-no/", { emp_no: value });
-          setEmpNoError(res.data.message || "");
-      } catch (error) {
-          console.error("직번 확인 오류:", error.response?.data);
-          setEmpNoError(error.response?.data?.message || "직번 확인에 실패했습니다.");
-      }
+    };
+
+    fetchInfo();
+  }, [empNoToCheck, messageApi]);
+
+  const validateEmpNo = (value) => {
+    setFormData(prevFormData => ({ ...prevFormData, emp_no: value }));
+    setEmpNoError("");
+
+    if (!value) {
+      setEmpNoError("필수 입력 정보입니다.");
+      setEmpNoToCheck(""); // 직번이 없으면 GET 요청 안 함
+      return;
+    }
+
+    console.log("Sending emp_no:", value); // 추가
+
+    // 간단한 형식 검사만 수행하거나, POST 요청을 통해 서버에서 1차 확인
+    // 여기서는 POST 요청을 유지하고, 성공 시 empNoToCheck 상태를 업데이트
+    axios.post("http://127.0.0.1:8000/api/check-emp-no/", { emp_no: value })
+      .then(res => {
+        setEmpNoError(res.data.message || "");
+        if (res.data.message === "직원입니다.") {
+          setEmpNoToCheck(value); // 직원 확인되면 GET 요청 트리거
+        } else {
+          setEmpNoToCheck(""); // 직원이 아니면 GET 요청 안 함
+          setFormData(prevFormData => ({ ...prevFormData, name: "", position: "" }));
+        }
+      })
+      .catch(error => {
+        console.error("직번 확인 오류:", error.response?.data);
+        setEmpNoError(error.response?.data?.message || "직번 확인에 실패했습니다.");
+        setEmpNoToCheck("");
+        setFormData(prevFormData => ({ ...prevFormData, name: "", position: "" }));
+      });
   };
 
   const validateUserID = async (value) => {
@@ -45,7 +89,7 @@ export default function RegisterForm() {
           return;
       }
       try {
-          const res = await axios.post("http://127.0.0.1:8000/api/users/check-user-id/", { userID: value });
+          const res = await axios.post("http://127.0.0.1:8000/api/check-user-id/", { userID: value });
           setUserIDError(res.data.message || "");
       } catch (error) {
           console.error("아이디 확인 오류:", error.response?.data);
@@ -89,33 +133,68 @@ export default function RegisterForm() {
   };
 
   const handleSubmit = async (e) => {
-      e.preventDefault();
+    e.preventDefault();
 
-      // 폼 제출 시 최종 유효성 검사 (빈 값 여부)
-      if (!formData.emp_no) setEmpNoError("필수 입력 정보입니다.");
-      if (!formData.userID) setUserIDError("필수 입력 정보입니다.");
-      if (!formData.password) setPasswordError("필수 입력 정보입니다.");
-      if (!formData.password2) setPassword2Error("필수 입력 정보입니다.");
-      if (!formData.email) setEmailError("필수 입력 정보입니다.");
+    console.log("Form Data before validation:", formData); // 추가
+    console.log("Before Validation"); // 추가
 
-      // 오류가 있으면 제출 막기
-      if (empNoError || userIDError || passwordError || password2Error || emailError ||
-          !formData.emp_no || !formData.userID || !formData.password || !formData.password2 || !formData.email) {
-          messageApi.error("입력하신 정보를 다시 확인해주세요.");
-          return;
-      }
+    // 1. 에러 상태 초기화
+    setEmpNoError(null);
+    setUserIDError(null);
+    setPasswordError(null);
+    setPassword2Error(null);
+    setEmailError(null);
 
-      try {
-          const res = await axios.post("http://127.0.0.1:8000/api/users/register/", formData);
-          messageApi.success("회원가입 성공! 🎉");
-          console.log("서버 응답:", res.data);
-          setTimeout(() => {
-              navigate("/login");
-          }, 1500);
-      } catch (error) {
-          console.error("회원가입 실패:", error.response?.data);
-          messageApi.error("회원가입 실패! 😢");
-      }
+    // 2. 수동 유효성 검사 실행 (최신 값 기반으로)
+    await validateEmpNo(formData.emp_no);
+    await validateUserID(formData.userID);
+    validatePassword(formData.password);
+    validatePassword2(formData.password2);
+    validateEmail(formData.email);
+
+    console.log("After Validation"); // 추가
+    console.log("empNoError:", empNoError); // 추가
+    console.log("userIDError:", userIDError); // 추가
+    console.log("passwordError:", passwordError); // 추가
+    console.log("password2Error:", password2Error); // 추가
+    console.log("emailError:", emailError); // 추가
+
+    // 3. 에러 메시지가 존재하는지 확인
+    const hasError = (empNoError !== null && empNoError !== "" && empNoError !== "직원입니다.") ||
+                  (userIDError !== null && userIDError !== "" && userIDError !== "가입할 수 있는 ID입니다.") ||
+                  (passwordError !== null && passwordError !== "") ||
+                  (password2Error !== null && password2Error !== "") ||
+                  (emailError !== null && emailError !== "");
+
+    const hasEmpty = !formData.emp_no || !formData.userID || !formData.password || !formData.password2 || !formData.email;
+
+    // 4. 제출 조건 확인
+    console.log("hasError:", hasError, "hasEmpty:", hasEmpty);
+    if (hasError || hasEmpty) {
+      console.log("Validation Failed. Not submitting.");
+      console.log("Form Data (on failure):", formData);
+      messageApi.error("입력하신 정보를 다시 확인해주세요.");
+      return;
+    }
+
+    // 5. 제출
+    console.log("Validation Passed. Submitting...");
+    console.log("Form Data (on success):", formData);
+    try {
+      const res = await axios.post("http://127.0.0.1:8000/api/register/", formData, {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+      console.log('회원가입 요청 완료');
+      messageApi.success("회원가입 성공! 🎉");
+      setTimeout(() => {
+        navigate("/login");
+      }, 1500);
+    } catch (error) {
+      console.error("회원가입 실패:", error.response?.data);
+      messageApi.error("회원가입 실패! 😢");
+    }
   };
 
   return (
@@ -132,8 +211,8 @@ export default function RegisterForm() {
               />
               {empNoError && (
                 <ErrorMessage
-                  isSuccess={empNoError === "직원입니다."}
-                  isError={empNoError !== "" && empNoError !== "직원입니다."}
+                  $isSuccess={empNoError === "직원입니다."}
+                  $isError={empNoError !== "" && empNoError !== "직원입니다."}
                 >
                   {empNoError}
                 </ErrorMessage>
@@ -146,8 +225,8 @@ export default function RegisterForm() {
               />
               {userIDError && (
                 <ErrorMessage
-                  isSuccess={userIDError === "가입할 수 있는 ID입니다."}
-                  isError={userIDError !== "" && userIDError !== "가입할 수 있는 ID입니다."}
+                  $isSuccess={userIDError === "가입할 수 있는 ID입니다."}
+                  $isError={userIDError !== "" && userIDError !== "가입할 수 있는 ID입니다."}
                 >
                   {userIDError}
                 </ErrorMessage>
@@ -231,12 +310,10 @@ const StyledForm = styled.form`
   }
 `;
 
-const ErrorMessage = styled('div', {
-  shouldForwardProp: (prop) => !['isSuccess', 'isError'].includes(prop),
-})`
+const ErrorMessage = styled.div`
   color: red;
   font-size: 0.8rem;
-  ${props => props.isSuccess && `
+  ${props => props.$isSuccess && `
     color: blue;
   `}
 `;

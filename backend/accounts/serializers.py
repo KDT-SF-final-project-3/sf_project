@@ -39,15 +39,26 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         return data
 
     def create(self, validated_data):
-        emp_no = validated_data['emp_no']
+        emp_no_value = validated_data['emp_no']  # 예 "10001"
         validated_data.pop('password2')
 
-        # 이름과 직책을 employee 테이블에서 가져옴
+        try:
+            employee = Employee.objects.get(emp_no=emp_no_value)
+            print(f"Found employee in create - emp_no: '{employee.emp_no}'")
+        except Employee.DoesNotExist:
+            print(f"Employee NOT found in create with emp_no: '{emp_no_value}'")
+            raise ValidationError("해당 직번의 직원 정보가 존재하지 않습니다.")
+        
+        name = employee.name
+        position = employee.position
+
         user = CustomUser.objects.create_user(
             userID=validated_data['userID'],
             password=validated_data['password'],
             email=validated_data['email'],
-            emp_no=emp_no,
+            emp_no=employee,  # ForeignKey는 객체로
+            name=name,
+            position=position
         )
         return user
     

@@ -22,8 +22,18 @@ class CheckEmpNoView(APIView):
         if not is_employee:
             return Response({"message": "직원이 아닙니다."}, status=status.HTTP_200_OK)
         if is_used:
-            return Response({"message": "이미 사용 중인 직번입니다."}, status=status.HTTP_200_OK)
+            return Response({"message": "이미 사용 중인 직번입니다."}, status=status.HTTP_409_CONFLICT)  # 수정
         return Response({"message": "직원입니다."}, status=status.HTTP_200_OK)
+
+    def get(self, request):
+        emp_no = request.query_params.get('emp_no')
+        if not emp_no:
+            return Response({"error": "직번을 입력해주세요."}, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            employee = Employee.objects.get(emp_no=emp_no)
+            return Response({"name": employee.name, "position": employee.position}, status=status.HTTP_200_OK)
+        except Employee.DoesNotExist:
+            return Response({"error": "존재하지 않는 직번입니다."}, status=status.HTTP_404_NOT_FOUND)
 
 class CheckUserIDView(APIView):
     def post(self, request):

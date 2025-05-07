@@ -11,10 +11,8 @@ class LoginView(APIView):
         userID = request.data.get('userID')
         password = request.data.get('password')
         
-        try:
-            # userID로 사용자 찾기
-            user = CustomUser.objects.filter(userID=userID).first()
-        except CustomUser.DoesNotExist:
+        user = CustomUser.objects.filter(userID=userID).first()
+        if not user:
             return Response({"detail": "사용자를 찾을 수 없습니다."}, status=status.HTTP_400_BAD_REQUEST)
     
         if user and user.is_approved:
