@@ -1,39 +1,54 @@
 from django.contrib import admin
-from .models import Employee, CustomUser
+from django import forms
+from .models import CustomUser, Employee
 
-@admin.register(Employee)
+# CustomUser 모델에서 사용할 폼 정의
+class CustomUserForm(forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = ['emp_no', 'userID', 'email', 'name', 'position', 'is_active', 'is_staff', 'is_approved']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # emp_no가 선택된 경우 name과 position을 자동으로 채워줍니다.
+        if self.instance and self.instance.emp_no:
+            self.fields['name'].initial = self.instance.emp_no.name
+            self.fields['position'].initial = self.instance.emp_no.position
+
+    def clean(self):
+        cleaned_data = super().clean()
+        emp_no = cleaned_data.get('emp_no')
+        if emp_no:
+            cleaned_data['name'] = emp_no.name
+            cleaned_data['position'] = emp_no.position
+        return cleaned_data
+
+# Employee 모델을 관리하는 Admin 설정
 class EmployeeAdmin(admin.ModelAdmin):
-    list_display = ('emp_no', 'name', 'team', 'position')
-    search_fields = ('emp_no', 'name')
+    list_display = ('emp_no', 'name', 'position')  # 직번, 이름, 직책을 보여줍니다.
+    search_fields = ('emp_no', 'name', 'position')  # 검색할 수 있는 필드
+    list_filter = ('position',)  # 직책별로 필터링할 수 있습니다.
 
-@admin.register(CustomUser)
+# CustomUser 모델을 관리하는 Admin 설정
 class CustomUserAdmin(admin.ModelAdmin):
-    list_display = ('userID', 'email', 'name', 'position', 'is_approved', 'is_active', 'is_staff', 'last_login')
-    search_fields = ('userID', 'email', 'employee__name', 'employee__emp_no')
-    list_filter = ('is_approved', 'is_active', 'is_staff')
-    fieldsets = (
-        (None, {'fields': ('userID', 'password')}),
-        ('개인 정보', {'fields': ('email', 'employee')}),
-        ('권한', {'fields': ('is_approved', 'is_active', 'is_staff')}),
-        ('중요한 날짜', {'fields': ('last_login',)}),
-    )
-    readonly_fields = ('last_login',)
-    ordering = ('userID',)
-    filter_horizontal = ()
-    # raw_id_fields = ('employee',) # ForeignKey를 raw ID 필드로 표시 (선택 사항)
-
-    def name(self, obj):
-        return obj.employee.name
-    name.short_description = '이름'
-    name.admin_order_field = 'employee__name'
-
-    def position(self, obj):
-        return obj.employee.position
-    position.short_description = '직책'
-    position.admin_order_field = 'employee__position'
+    list_display = ('userID', 'emp_no', 'name', 'position', 'is_approved')
+    fields = ('emp_no', 'userID', 'password', 'email', 'is_approved', 'is_active', 'is_staff', 'name', 'position')
+    readonly_fields = ('name', 'position')
 
     def save_model(self, request, obj, form, change):
-        # 사용자를 생성할 때 비밀번호를 해싱합니다.
-        if not obj.pk:
-            obj.set_password(form.cleaned_data['password'])
+        if obj.emp_no:
+            try:
+                employee = Employee.objects.get(emp_no=obj.emp_no)
+                obj.name = employee.name
+                obj.position = employee.position
+            except Employee.DoesNotExist:
+                # Employee가 존재하지 않을 경우, name과 position을 비우거나
+                # 사용자에게 알림을 줄 수 있습니다. 여기서는 일단 비워둡니다.
+                obj.name = ''
+                obj.position = ''
         super().save_model(request, obj, form, change)
+
+# 모델 등록
+admin.site.register(Employee, EmployeeAdmin)
+admin.site.register(CustomUser, CustomUserAdmin)
+

@@ -2,7 +2,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Layout as AntLayout, Menu } from 'antd';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import { BrowserRouter as Route, Routes, Link } from 'react-router-dom';
 import { HomeOutlined, UserOutlined, HistoryOutlined, BarChartOutlined, LogoutOutlined } from '@ant-design/icons';
 import { useNavigate } from "react-router-dom";
 import { logout } from "../utils/auth";
@@ -112,12 +112,6 @@ const ContentLayout = styled(AntLayout)`
 
 const Content = styled(AntContent)`
   margin: 16px;
-`;
-
-const ContentBox = styled.div`
-  padding: 24px;
-  background: #fff;
-  min-height: 360px;
 `;
 
 const Footer = styled(AntFooter)`
