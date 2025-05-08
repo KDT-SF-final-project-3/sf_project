@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     'webcam',
     'manual_drive',
-    'auto_drive',
+
 ]
 
 MIDDLEWARE = [

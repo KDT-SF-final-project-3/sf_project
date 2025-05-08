@@ -38,9 +38,9 @@ export default function MainPage() {
                     <Menu.Item key="3" icon={<BarChartOutlined />}>
                         <Link to="/environment">환경 이력</Link>
                     </Menu.Item>
-                    <Menu.Item key="4" icon={<UserOutlined />}>
+                    {/* <Menu.Item key="4" icon={<UserOutlined />}>
                         <Link to="/admin">관리자 페이지</Link>
-                    </Menu.Item>
+                    </Menu.Item> */}
                 </Menu>
 
                 <LogoutWrapper>

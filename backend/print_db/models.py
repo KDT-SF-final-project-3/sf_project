@@ -21,7 +21,7 @@ class Table4(models.Model):
     end_time = models.CharField(max_length=24)
 
     class Meta:
-        managed = False  # 뷰이기 때문에 마이그레이션 X
+        managed = False
         db_table = 'table4'  # 뷰 이름
 
 from django.db import models
@@ -33,9 +33,21 @@ class Table5(models.Model):
     end_time = models.CharField(max_length=24)
 
     class Meta:
-        managed = False  # ❗ DB View이므로 Django가 테이블 생성/삭제 X
+        managed = False
         db_table = 'table5'
 
+
+
+class Table6(models.Model):
+    red = models.DecimalField(max_digits=23, decimal_places=0)
+    blue = models.DecimalField(max_digits=23, decimal_places=0)
+    green = models.DecimalField(max_digits=23, decimal_places=0)
+
+    dummy_id = models.AutoField(primary_key=True)  # 💡 추가!
+
+    class Meta:
+        managed = False
+        db_table = 'table6'
 
 class Table7(models.Model):
     id = models.BigAutoField(primary_key=True)

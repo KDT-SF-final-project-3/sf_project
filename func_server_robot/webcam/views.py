@@ -5,12 +5,13 @@ import cv2
 from ultralytics import YOLO  # <-- YOLOv8 불러오기
 import torch
 
+cap = cv2.VideoCapture(0)  # 여기에 명시적으로 선언
+
 # YOLO 모델 로딩 (가장 작은 모델 yolov8n.pt 사용)
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 model = YOLO('yolov8n.pt').to(device)
 
 def generate_camera_stream():
-    cap = cv2.VideoCapture(0)  # 0번 웹캠
     while True:
         ret, frame = cap.read()
         if not ret:

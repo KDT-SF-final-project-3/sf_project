@@ -4,7 +4,7 @@ import React from 'react';
 const WebcamViewer = () => {
     return (
         <div>
-            <h2>웹캠 스트림</h2>
+            <h2>웹캠 화면</h2>
             <img 
                 src="http://localhost:8001/video_feed/" 
                 alt="Webcam Stream" 

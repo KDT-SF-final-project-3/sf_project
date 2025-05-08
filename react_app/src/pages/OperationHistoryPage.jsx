@@ -6,26 +6,27 @@ const { RangePicker } = DatePicker;
 const { Text } = Typography;
 
 const OperationHistoryPage = () => {
-  const [table4Data, setTable4Data] = useState([]);
-  const [table5Data, setTable5Data] = useState([]);
+  const [table4Data, setTable4Data] = useState([]);  // ✅ 수동 이력
+  const [table5Data, setTable5Data] = useState([]);  // ✅ 자동 이력
   const [lastUpdated, setLastUpdated] = useState(null);
   const [range4, setRange4] = useState([]);
   const [range5, setRange5] = useState([]);
 
   useEffect(() => {
     const fetchTable4 = () => {
-      axios.get('http://localhost:8000/printdb/table4/')
+      axios.get('http://localhost:8000/printdb/table4/json/')
         .then(res => {
-          setTable4Data(res.data);
+          setTable4Data(res.data.items);
           setLastUpdated(new Date());
         })
         .catch(err => console.error('table4 불러오기 실패:', err));
     };
 
     const fetchTable5 = () => {
-      axios.get('http://localhost:8000/printdb/table5/')
+      axios.get('http://localhost:8000/printdb/table5/json/')
         .then(res => {
           setTable5Data(res.data.items);
+          setLastUpdated(new Date());
         })
         .catch(err => console.error('table5 불러오기 실패:', err));
     };
@@ -41,14 +42,7 @@ const OperationHistoryPage = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const table4Columns = [
-    { title: 'ID', dataIndex: 'id', key: 'id' },
-    { title: '명령어', dataIndex: 'command', key: 'command' },
-    { title: '시작 시간', dataIndex: 'start_time', key: 'start_time' },
-    { title: '종료 시간', dataIndex: 'end_time', key: 'end_time' },
-  ];
-
-  const table5Columns = [
+  const tableColumns = [
     { title: 'ID', dataIndex: 'id', key: 'id' },
     { title: '명령어', dataIndex: 'command', key: 'command' },
     { title: '시작 시간', dataIndex: 'start_time', key: 'start_time' },
@@ -57,9 +51,10 @@ const OperationHistoryPage = () => {
 
   return (
     <div style={{ padding: 24 }}>
-      {/* ⚙️ 수동 이력 */}
+
+      {/* ⚙️ 수동 이력 (table4) */}
       <div style={{ fontSize: '28px', fontWeight: 'bold', marginBottom: '8px' }}>
-        ⚙️ 작동 이력 (수동)
+        ⚙️ 수동 작동 이력
       </div>
       <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
         <RangePicker
@@ -78,16 +73,16 @@ const OperationHistoryPage = () => {
       </Text>
       <Table
         dataSource={table4Data}
-        columns={table4Columns}
+        columns={tableColumns}
         rowKey="id"
         pagination={{ pageSize: 10 }}
       />
 
       <hr style={{ margin: '40px 0' }} />
 
-      {/* 📋 자동 이력 */}
+      {/* 📋 자동 이력 (table5) */}
       <div style={{ fontSize: '28px', fontWeight: 'bold', marginBottom: '8px' }}>
-        📋 작동 이력 (자동)
+        📋 자동 작동 이력
       </div>
       <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
         <RangePicker
@@ -106,7 +101,7 @@ const OperationHistoryPage = () => {
       </Text>
       <Table
         dataSource={table5Data}
-        columns={table5Columns}
+        columns={tableColumns}
         rowKey="id"
         pagination={{ pageSize: 10 }}
       />

@@ -5,7 +5,7 @@ const commands = ['a', 'm', '1,1', '1,2', '2,1', '2,2', '3,1', '3,2', 'q'];
 const ControlPanel = () => {
   const sendCommand = async (cmd) => {
     try {
-      const response = await fetch(`http://localhost:8000/api/control/?cmd=${encodeURIComponent(cmd)}`);
+      const response = await fetch(`http://localhost:8001/api/control/?cmd=${encodeURIComponent(cmd)}`);
       const data = await response.json();
       console.log(`[${cmd}] 응답:`, data);
     } catch (error) {

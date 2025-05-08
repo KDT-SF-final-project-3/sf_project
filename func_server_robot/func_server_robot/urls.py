@@ -21,9 +21,8 @@ from django.urls import path, include
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('', include('webcam.urls')),  # <-- 여기 추가
-    path('manual_drive/', include('manual_drive.urls')),
+    path('api/', include('manual_drive.urls')),  # ✅ 'api/'만 붙여주세요!
 
-    path('auto_drive/', include('auto_drive.urls')),  # auto_drive는 별도 경로로!
 
 ]
 

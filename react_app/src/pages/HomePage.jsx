@@ -46,54 +46,26 @@ const CenteredCard = styled(Card)`
 `;
 
 const OperationHistoryPage = () => {
-  const [table7Data, setTable7Data] = useState(null);
+  const [table7Data, setTable7Data] = useState(null);  // 센서 데이터
+  const [actionCounts, setActionCounts] = useState({ red: 0, blue: 0, green: 0 });  // ✅ table6
   const [lastUpdated, setLastUpdated] = useState(null);
   const [mode, setMode] = useState('manual');
 
-  const dummyActionCounts = {
-    A: 3,
-    B: 5,
-    C: 2
-  };
+  // ✅ 데이터 요청
+  const fetchData = () => {
+    axios.get('http://localhost:8000/printdb/table7/')
+      .then(res => {
+        setTable7Data(res.data);
+        setLastUpdated(new Date());
+      })
+      .catch(err => console.error('table7 불러오기 실패:', err));
 
-  const actionData = {
-    labels: ['A', 'B', 'C'],
-    datasets: [
-      {
-        label: '동작 횟수',
-        data: Object.values(dummyActionCounts),
-        backgroundColor: ['#ff4d4f', '#1890ff', '#52c41a'],
-      },
-    ],
-  };
-
-  const chartOptions = {
-    responsive: true,
-    plugins: {
-      legend: { display: false },
-      title: { display: false },
-    },
-    scales: {
-      x: {
-        ticks: { font: { size: 14 } },
-      },
-      y: {
-        beginAtZero: true,
-        ticks: { stepSize: 1 },
-      },
-    },
+    axios.get('http://localhost:8000/printdb/table6/')
+      .then(res => setActionCounts(res.data))
+      .catch(err => console.error('table6 불러오기 실패:', err));
   };
 
   useEffect(() => {
-    const fetchData = () => {
-      axios.get('http://localhost:8000/printdb/table7/')
-        .then(res => {
-          setTable7Data(res.data);
-          setLastUpdated(new Date());
-        })
-        .catch(err => console.error('table7 불러오기 실패:', err));
-    };
-
     fetchData();
     const interval = setInterval(fetchData, 10000);
     return () => clearInterval(interval);
@@ -106,9 +78,13 @@ const OperationHistoryPage = () => {
   );
 
   const handleCommand = (cmd) => {
+    console.log(`명령 전송: ${cmd}`);
     if (cmd === '자동') setMode('auto');
     else if (cmd === '수동') setMode('manual');
-    else if (mode === 'manual') console.log(`명령 전송: ${cmd}`);
+
+    axios.get(`http://localhost:8001/api/control/?cmd=${encodeURIComponent(cmd)}`)
+      .then(res => console.log('✅ 응답:', res.data))
+      .catch(err => console.error('❌ 에러:', err));
   };
 
   const sensorData = table7Data ? [
@@ -121,11 +97,32 @@ const OperationHistoryPage = () => {
   ] : [];
 
   const buttonList = [
-    '잡기', '놓기',
-    '상승', '하강',
-    '회전', '역회전',
-    '수동', '자동', '정지'
+    '잡기', '놓기', '상승', '하강', '회전', '역회전', '수동', '자동', '정지'
   ];
+
+  // ✅ 차트 데이터
+  const actionData = {
+    labels: ['Red', 'Blue', 'Green'],
+    datasets: [
+      {
+        label: '동작 횟수',
+        data: [actionCounts.red, actionCounts.blue, actionCounts.green],
+        backgroundColor: ['#ff4d4f', '#1890ff', '#52c41a'],
+      },
+    ],
+  };
+
+  const chartOptions = {
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+      title: { display: false },
+    },
+    scales: {
+      x: { ticks: { font: { size: 14 } } },
+      y: { beginAtZero: true, ticks: { stepSize: 1 } },
+    },
+  };
 
   return (
     <Content>
