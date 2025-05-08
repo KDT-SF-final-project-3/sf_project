@@ -14,8 +14,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         {/* 보호된 경로 */}
-        <Route
-          path="/*"
+        <Route path="/"
           element={
             <ProtectedRoute>
               <MainPage />
