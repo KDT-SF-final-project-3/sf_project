@@ -25,9 +25,9 @@ export default function MainPage() {
     return (
         <Layout>
             <Sider width={200}>
-                <div>
+                <UserNameWrapper>
                     {name ? `${name}님` : "사용자"}
-                </div>
+                </UserNameWrapper>
                 <Menu mode="inline" defaultSelectedKeys={['1']} style={{ borderRight: 0 }}>
                     <Menu.Item key="1" icon={<HomeOutlined />}>
                         <Link to="/">홈</Link>
@@ -85,8 +85,8 @@ const Header = styled(AntHeader)`
   height: 64px;
   line-height: 64px;
   padding: 0;
+  width: 1530px;
   position: fixed;
-  width: 100%;
   top: 0;
   z-index: 10;
 `;
@@ -102,6 +102,12 @@ const Sider = styled(AntSider)`
   height: 100vh;
   left: 0;
   overflow: auto;
+`;
+
+const UserNameWrapper = styled.div`
+  padding: 16px;
+  text-align: center;
+  border-bottom: 1px solid #f0f0f0; /* 메뉴 아이템과 비슷한 구분선 */
 `;
 
 const ContentLayout = styled(AntLayout)`

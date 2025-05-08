@@ -18,13 +18,13 @@ class CustomUserAdmin(admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
         if obj.emp_no:
             try:
-                employee = Employee.objects.get(emp_no=obj.emp_no.emp_no)
+                employee = Employee.objects.get(emp_no=obj.emp_no)
                 obj.name = employee.name
                 obj.position = employee.position
             except Employee.DoesNotExist:
                 obj.name = ''
                 obj.position = ''
-        if not change:
+        if not change and obj.password:  # 새로운 사용자 생성 시에만 비밀번호 암호화
             obj.set_password(obj.password)  # 비밀번호 암호화
         super().save_model(request, obj, form, change)
 

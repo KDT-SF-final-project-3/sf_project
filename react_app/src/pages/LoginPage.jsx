@@ -28,18 +28,23 @@ export default function LoginPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://127.0.0.1:8000/api/login/", formData);
-      const { access, refresh, is_approved, name, userID } = res.data;
+      const res = await axios.post("http://127.0.0.1:8000/api/accounts/login/", formData);
+      const { message, name, userID, is_approved } = res.data; // 백엔드 응답에 맞춰 변경
+      // const { access, refresh, is_approved, name, userID } = res.data; // 기존 JWT 관련 코드 주석 처리
+
+      // JWT 토큰 관련 localStorage 저장 부분 제거
+      // localStorage.setItem("access_token", access);
+      // localStorage.setItem("refresh_token", refresh);
+      
       if (!is_approved) {
         return messageApi.error("승인되지 않은 계정입니다.");
       }
 
-      localStorage.setItem("access_token", access);
-      localStorage.setItem("refresh_token", refresh);
+      localStorage.setItem("isLoggedIn", "true");
       localStorage.setItem("name", name);
       localStorage.setItem("userID", userID);
 
-      messageApi.success("로그인 성공!");
+      messageApi.success(message || "로그인 성공!"); // 백엔드 메시지 사용 또는 기본 메시지
       setTimeout(() => navigate("/"), 1000);
     } catch (err) {
       messageApi.error(err.response?.data?.error || "로그인 실패! 😢");

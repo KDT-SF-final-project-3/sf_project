@@ -5,7 +5,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MainPage from "./pages/MainPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
-import ControlPanel from "./components/ControlPanel"; 
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
