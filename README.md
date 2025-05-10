@@ -17,10 +17,10 @@
 ## 3. 팀 구성 및 역할 분담
 | 이름 | 역할 | 주요 업무 | GitHub 프로필 |
 |------|------|--------------|-----------|
-| **유승태** | 팀장 | 계획서 작성, 하드웨어 제작, 소프트웨어 제작 | [![GitHub](https://img.shields.io/badge/GitHub-Profile-black?logo=github)](https://github.com/Yoo-Seung-Tae) |
+| **유승태** | 팀장 | 프로젝트 계획, 일정조율 및 감독, 기능서버 담당, 발표자료 수집, 발표, Back-end : DB 모델설계 및 서버 연결 | [![GitHub](https://img.shields.io/badge/GitHub-Profile-black?logo=github)](https://github.com/Yoo-Seung-Tae) |
 | **한용찬** | 팀원 | 계획서 작성, 하드웨어 제작, 소프트웨어 제작 | [![GitHub](https://img.shields.io/badge/GitHub-Profile-black?logo=github)](https://github.com/gksdydcks) |
-| **황세진** | 팀원 | 계획서 작성, 하드웨어 제작, 소프트웨어 제작 | [![GitHub](https://img.shields.io/badge/GitHub-Profile-black?logo=github)](https://github.com/gksdydcks) |
-| **김희수** | 팀원 | 계획서 작성, 하드웨어 제작, 소프트웨어 제작 | [![GitHub](https://img.shields.io/badge/GitHub-Profile-black?logo=github)](https://github.com/gksdydcks) |
+| **황세진** | 팀원 | 계획서 작성, 하드웨어 제작, 소프트웨어 제작 | |
+| **김희수** | 팀원 | 계획서 작성, 하드웨어 제작, 소프트웨어 제작 | |
 
 ## 4. 개발 일정
 | 마일스톤 | 목표 날짜           | 설명                                               |
@@ -67,7 +67,36 @@
 
 ## 9. 참고 자료 및 링크
 
-깃허브 주소: https://github.com/SF7-project-4/C_Plus2_Project
+### 주제 선정 배경
 
-과학상자: https://sciencebox.co.kr/bbs/board.php?bo_table=manual&wr_id=7&device=pc
+- 현대차그룹 - https://biz.heraldcorp.com/article/10451582?ref=naver
+- 한화에어로스페이스 - https://biz.heraldcorp.com/article/10447034?ref=naver
+- 독일 지멘스 - https://www.hankyung.com/article/2022091248781
+- 삼성전자 - https://www.fnnews.com/news/202403311808261099
+
+### 소프트웨어 부분
+
+- Django 공식 홈페이지 - https://www.djangoproject.com/
+- Node.js 홈페이지 - https://nodejs.org/en/download/
+- Django - React 연동 - https://oliopasta.tistory.com/11
+- pip 홈페이지 - https://pypi.org/project/mysqlclient/
+
+### 하드웨어 부분
+
+- 17hS8401 / 스텝모터 회로도 - https://blog.naver.com/roboholic84/222406097514
+- 스텝 모터 연결 - https://www.makerguides.com/tb6600-stepper-motor-driver-arduino-tutorial/
+- JGA25 상하, 집게팔 제어 DC모터 & L298N 듀얼모터 드라이브 회로도 - https://bota.tistory.com/2329
+- CDS모듈 회로도 - https://blog.naver.com/eduino/222064604122
+- 팬 모터 모듈 회로도 - https://blog.naver.com/roboholic84/220537814504
+- LED(G)LED 회로도 - https://m.blog.naver.com/dong000811/222583342016
+- DHT11 회로도 - https://blog.naver.com/boilmint7/220928870337
+
+### fzpz파일 : Fritzing 부품 파일
+- TB6600 스텝 모터 드라이버 .fzpz파일 - https://forum.fritzing.org/t/where-can-i-get-tb6600-v1-2-parts/17237
+- 엔코더DC모터 .fzpz파일 - https://forum.fritzing.org/t/dc-motor-with-two-phase-encoder/3776/2
+- L298n모터 드라이브 .fzpz파일 – https://forum.fritzing.org/t/h-bridge-with-l298n-motor-driver/7711
+- 조도센서 모듈 .fzpz파일 - https://arduinomodules.info/download/ky-018-photoresistor-module-zip-file/
+- 팬모터 .fzpz파일 - https://forum.fritzing.org/t/l9110-h-bridge-module/3110
+
+
 
