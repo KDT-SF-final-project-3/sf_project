@@ -133,6 +133,7 @@
 
 
 ## 7. HW
+- 순서도
 <table>
   <thead>
     <tr align="center">
@@ -214,18 +215,40 @@
   </tr>
 </table>
 
+<h3 align="center">Front-end 디자인
+</h3>
+
+<table>
+  <tr>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/c03b7395-c27b-41e3-a23c-6005da77a6ea" width="300"/><br>
+      <b>시연 사진 1</b>
+    </td>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/b44fd97d-00ac-4ae8-9c49-6916e86b8e94" width="300"/><br>
+      <b>시연 사진 2</b>
+    </td>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/e064d73f-6b20-4fdb-a54e-1927c826b46a" width="300"/><br>
+      <b>시연 사진 3</b>
+    </td>
+  </tr>
+</table>
+
+
+
   
-## 8. 한계점 및 개선 방향
-  ### - SW 부분
+## 9. 한계점 및 개선 방향
+  ###  SW 부분
 - 다중 서버 구조를 먼저 구현한 뒤 모델을 수정하는 과정에서 구조 간 충돌로 인해 큰 오류가 발생함.
 - 오류 해결을 위해 다양한 시도를 진행하였으나, 결과적으로 보안과 관련된 토큰 인증 기능을 사용할 수 없게 됨.
 - 이러한 경험을 통해, 시스템을 구현하기 전 **모델 구조에 대한 명확한 설계 및 문서화의 중요성**을 절감하게 됨.
 - 추후 개발 시에는 코드 작성 전 구조를 체계적으로 정리하고, 해당 문서를 기준으로 구현 및 수정 작업을 진행할 계획임.
 
-##
+### HW 부분
 
 
-## 9. 참고 자료 및 링크
+## 10. 참고 자료 및 링크
 
 ### 주제 선정 배경
 
