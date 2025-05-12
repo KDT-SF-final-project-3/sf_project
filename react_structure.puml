@@ -1,0 +1,67 @@
+@startuml react_app_structure
+
+package "src" {
+    package "components" {
+        class ControlPanel {
+            +로봇 제어 UI
+        }
+
+        class ProtectedRoute {
+            +로그인 확인 후 접근 허용
+        }
+
+        class WebcamViewer {
+            +웹캠 화면 출력
+        }
+    }
+
+    package "pages" {
+        class AdminPage {
+            +관리자 페이지 (미작성)
+        }
+
+        class EnvironmentHistoryPage {
+            +환경 이력 보기
+        }
+
+        class OperationHistoryPage {
+            +제어 이력 보기
+        }
+
+        class HomePage {
+            +웹캠 + 제어패널 + 현황
+        }
+
+        class MainPage {
+            +라우팅 허브 페이지
+        }
+
+        class LoginPage {
+            +로그인 화면
+        }
+
+        class RegisterPage {
+            +회원가입 화면
+        }
+    }
+
+    class App {
+        +라우팅 설정
+    }
+}
+
+' 관계
+App --> ProtectedRoute : 로그인 확인
+App --> MainPage
+App --> LoginPage
+App --> RegisterPage
+
+MainPage --> AdminPage
+MainPage --> EnvironmentHistoryPage
+MainPage --> OperationHistoryPage
+MainPage --> HomePage
+
+HomePage --> WebcamViewer
+HomePage --> ControlPanel
+
+@enduml

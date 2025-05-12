@@ -1,0 +1,68 @@
+@startuml accounts_class
+
+' 모델 클래스
+class Employee {
+    +emp_no: CharField
+    +name: CharField
+    +team: CharField
+    +position: CharField
+    +__str__()
+}
+
+class CustomUserManager {
+    +create_user()
+    +create_superuser()
+}
+
+class CustomUser {
+    +emp_no: CharField
+    +name: CharField
+    +userID: CharField
+    +email: EmailField
+    +position: CharField
+    +is_approved: Boolean
+    +is_active: Boolean
+    +is_staff: Boolean
+    +last_login: DateTimeField
+    +save()
+    +__str__()
+}
+
+' 시리얼라이저
+class UserRegisterSerializer {
+    +validate_emp_no()
+    +validate_userID()
+    +validate()
+    +create()
+}
+
+' 뷰 클래스
+class RegisterView {
+    +post()
+}
+
+class CheckEmpNoView {
+    +post()
+    +get()
+}
+
+class CheckUserIDView {
+    +post()
+}
+
+class SimpleLoginView {
+    +post()
+}
+
+' 관계 설정
+CustomUserManager --> CustomUser : "사용자 관리"
+CustomUser -- Employee : "emp_no (ForeignKey)"  ' CustomUser는 emp_no 외래키로 Employee 참조
+UserRegisterSerializer --> CustomUser : "사용자 데이터"
+UserRegisterSerializer --> Employee : "직원 데이터"
+RegisterView --> UserRegisterSerializer : "사용자 등록"
+CheckEmpNoView --> Employee : "직원 확인"
+CheckEmpNoView --> CustomUser : "사용자 확인"
+CheckUserIDView --> CustomUser : "아이디 확인"
+SimpleLoginView --> CustomUser : "사용자 인증"
+
+@enduml

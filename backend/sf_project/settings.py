@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'control',  # 로봇팔 제어
     'corsheaders', # cors 추가
     'print_db',
+    'drf_yasg', # API 문서화
 
 ]
 
@@ -55,7 +56,7 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',  # CORS 추가
     'django.middleware.common.CommonMiddleware',  # CORS 추가
     'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware', 
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -129,10 +130,11 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'Asia/Seoul'         # ✅ 한국 시간대 설정
-USE_TZ = True                    # ✅ 시간대를 자동 적용
+TIME_ZONE = 'Asia/Seoul'  # 서울 시간을 기본 시간대 설정
 
 USE_I18N = True
+
+USE_TZ = False  # 로컬 시간 사용 (시간대 변환 비활성화)
 
 
 
@@ -146,11 +148,16 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend', # Django 기본 인증 백엔드
+    # 필요한 경우 다른 인증 백엔드를 추가할 수 있습니다.
+]
+
 # SimpleJWT => 토큰 활용
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        # 'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
     ),
 }
-
-AUTH_USER_MODEL = 'accounts.CustomUser'
