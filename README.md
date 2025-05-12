@@ -1,11 +1,19 @@
 # 🦾스마트 팩토리 눈과 손 : Web-based 실시간 모니터링 & Robot Arm Control
-## 1. 프로젝트 개요 및 주제 선정 배경
+## 1. 프로젝트 개요
 ### 프로젝트 목표
 - 아두이노와 각종 센서 및 모터를 사용하여 HW(로봇팔)를 제작하고, 파이썬 기반의 서버를 구현하여 스마트팩토리에서 활용하는 통합 관제 시스템을 구축
+### 프로잭트 목적
+- 아두이노를 사용하여 로봇팔을 제어하고, 공장에서 활용되는 환경을 **프로토타입 형태**로 구현하고자 함
+- 스마트팩토리에서 운용되는 **통합 서버 시스템**을 직접 구축하고자 함
+- **DB와의 연동**을 통해 시스템 운영 중 생성되는 데이터를 저장하고자 함
 ### 주제 선정 이유
   - 스마트 팩토리 필요성 증가.
   - 생산성 향상 및 공정 자동화 기술 향상.
-    
+### 주요 기능
+- 객체 인식 기능을 통해 로봇팔을 제어하며, 객체의 종류에 따라 구분된 동작을 구현함
+- 로봇의 동작 이력 및 센서로 수집한 환경 정보를 DB에 저장하고, 실시간으로 웹페이지를 통해 확인 가능함
+
+
 ## 2. 주요 기술 스택
 <table>
   <tr>
@@ -55,7 +63,7 @@
 | 유승태   | 팀장, SW 담당   | **프로젝트 기획**, 일정 조율 및 감독, 기초 서버 담당, 발표 자료 수집, 발표  <br> - **Back-end**: DB 모델 설계 및 Server 연결, OpenCV-Server 연결 <br> - **Front-end**: 실시간 로봇팔 모니터링 및 제어 기능, 제어 이력 및 현황 출력 기능 제작 <br> - **HW 연동**: Server를 통해 연결된 HW와 DB를 이용하여 센서 데이터를 MySQL 저장 | [![GitHub](https://img.shields.io/badge/GitHub-Profile-black?logo=github)](https://github.com/Yoo-Seung-Tae) |
 | 한용찬   | 팀원, HW 담당   | **프로젝트 기획**, 로봇팔 시스템 담당, 발표 자료 수집 <br> - **HW**: 상하 제어 DC 모터, 집게팔 제어 DC 모터 아두이노 회로 구현, 모터 선정 및 제어, 센서 제어 <br> - **SW**: 아두이노 기반 제어 기능 코딩, DB-기능서버 연동                                | [![GitHub](https://img.shields.io/badge/GitHub-Profile-black?logo=github)](https://github.com/gksdydcks) |
 | 황세진   | 팀원, HW 담당   | **프로젝트 기획**, 로봇팔 시스템 담당, 발표 자료 수집 <br> - **HW**: 회전 제어 스텝 모터, 집게팔 제어 DC모터 아두이노 회로 구현, 모터 선정 및 제어, 센서 제어 <br> - **SW**: 아두이노 기반 제어 기능 코딩, DB-기능서버 연동                                | [![GitHub](https://img.shields.io/badge/GitHub-Profile-black?logo=github)](https://github.com/sejin1048)|
-| 김희수   | 팀원, SW 담당   | **프로젝트 기획**, 메인 서버 담당, 발표 자료 제작 <br> - **Back-end**: 서버 환경 구축, DB 모델 설계 및 Server 연결, Django-React (axios 통신) 연결 <br> - **Front-end**: React를 활용한 웹사이트 구축, 로그인 & 회원가입 기능 제작                      | [![GitHub](https://img.shields.io/badge/GitHub-Profile-black?logo=github)]() |
+| 김희수   | 팀원, SW 담당   | **프로젝트 기획**, 메인 서버 담당, 발표 자료 제작 <br> - **Back-end**: 서버 환경 구축, DB 모델 설계 및 Server 연결, Django-React (axios 통신) 연결 <br> - **Front-end**: React를 활용한 웹사이트 구축, 로그인 & 회원가입 기능 제작                      | [![GitHub](https://img.shields.io/badge/GitHub-Profile-black?logo=github)](https://github.com/BunnyByee) |
 
 
 ## 4. 개발 일정
@@ -80,7 +88,7 @@
   
 - 플로우 차트
   
-![image.png](attachment:8d6eead6-d982-40aa-bc44-df5197d13543:image.png) 
+![Image](https://github.com/user-attachments/assets/1fdf2a59-9cd5-406d-81c2-124ece835864)
 
 - 핵심 기능 리스트
  
