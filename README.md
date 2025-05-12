@@ -215,7 +215,17 @@
   </tr>
 </table>
 
-## 8. 소프트웨어 트러블 슈팅
+## 8.시연
+![Image](https://github.com/user-attachments/assets/095b411e-c825-4920-aa6a-2b26e7864d89) 
+![Image](https://github.com/user-attachments/assets/ca360a76-b6ae-46af-b6ed-4be4816035c6) 
+![Image](https://github.com/user-attachments/assets/e659d439-4b52-4de5-9d30-7461ef1b4a28)
+![Image](https://github.com/user-attachments/assets/40794e5f-1777-42c4-a4fe-b458b62622ad)
+![Image](https://github.com/user-attachments/assets/958462db-088e-4df4-a175-88aad7a98816)
+![Image](https://github.com/user-attachments/assets/4bea1bf1-a5b7-41bd-a9fe-d468559ec832)
+![Image](https://github.com/user-attachments/assets/827b0705-674a-4fb6-9c20-e9c0e9d20805) 
+![Image](https://github.com/user-attachments/assets/694d2862-28e9-49c4-bb51-acb1e1563b4a) 
+![Image](https://github.com/user-attachments/assets/f2701447-70b5-4fe6-a72f-984c4cedda5d)
+## 9. 소프트웨어 트러블 슈팅
   ### 1. Login 기능 오류
 
 - `ForeignKey`를 활용하여 모델을 새롭게 구성하고 연결하는 과정에서 오류가 발생함.
