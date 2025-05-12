@@ -131,7 +131,88 @@
 - 해당 기능을 수정하였으나, 이후 특정 페이지가 정상적으로 표시되지 않는 문제가 발생함.
 - 현재 이 문제는 아직 완전히 해결되지 않은 상태임.
 
+
 ## 7. HW
+<table>
+  <thead>
+    <tr align="center">
+      <th>환경센서 아두이노</th>
+      <th>모터 아두이노</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr align="center">
+      <td>
+        <img src="https://github.com/user-attachments/assets/ec798184-3497-4c7f-8c76-b2a0ec202003" width="400"/>
+      </td>
+      <td>
+        <img src="https://github.com/user-attachments/assets/09f9bb4a-060a-4a92-8dc1-53f28976231e" width="450"/>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<table>
+  <thead>
+    <tr align="center">
+      <th>환경센서 회로도</th>
+      <th>모터 회로도</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr align="center">
+      <td>
+        <img src="https://github.com/user-attachments/assets/6009ae1e-ba58-4f2e-8c35-779373142147" width="400"/>
+      </td>
+      <td>
+        <img src="https://github.com/user-attachments/assets/9849a940-a7e7-4cbd-873a-a3968d3f94c5" width="450"/>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+## 8. sw
+<h3 align="center">Back-end 구성</h3>
+
+<table>
+  <tr>
+    <td colspan="3" align="center">
+      <img src="https://github.com/user-attachments/assets/161692af-7961-4375-bf24-17eff3597cf0" width="700"/>
+    </td>
+  </tr>
+  <tr align="center">
+    <th width="33%">메인 서버</th>
+    <th width="33%">기능 서버1</th>
+    <th width="33%">기능 서버2</th>
+  </tr>
+  <tr valign="top">
+    <td>
+      ● 포트: 8000<br>
+      ● React와 연결<br>
+      ● RestAPI 활용<br>
+      ● DB 데이터 추출<br><br>
+      - 로그인 기능<br>
+      - 회원가입 기능<br>
+      - 로봇팔 제어 기능<br>
+      - 데이터 출력 기능
+    </td>
+    <td>
+      ● 포트: 8001<br>
+      ● 로봇팔 아두이노와 연결<br>
+      ● OpenCV 활용<br>
+      ● YOLO → 객체 인식<br><br>
+      - 로봇팔 자동 운행<br>
+      - 제어 데이터 수집
+    </td>
+    <td>
+      ● 포트: 8002<br>
+      ● 환경 센서 아두이노와 연결<br><br>
+      - 환경 데이터 수집
+    </td>
+  </tr>
+</table>
 
   
 ## 8. 한계점 및 개선 방향
