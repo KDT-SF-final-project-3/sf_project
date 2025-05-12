@@ -214,6 +214,10 @@
     </td>
   </tr>
 </table>
+- Front-end 구성
+![Image](https://github.com/user-attachments/assets/f5d6bb63-4ede-499a-8f5b-f68162d42f38)
+- Front-end DB Table
+![Image](https://github.com/user-attachments/assets/b5329f39-639c-4574-bd7a-31ecafb2a5d9)
 
 ## 8.시연
 <!-- ✅ 표 ①: 잡기 / 놓기 -->
