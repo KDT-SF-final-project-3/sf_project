@@ -81,11 +81,7 @@
 | 최종 프로젝트 발표   | 2025-05-09                    | 최종 프로젝트 발표!           
   
 ## 5. 개발 프로세스
-
-
- 
-     
-  
+    
 - 플로우 차트
   
 ![Image](https://github.com/user-attachments/assets/1fdf2a59-9cd5-406d-81c2-124ece835864)
@@ -113,7 +109,7 @@
 
 
 ## 6. HW
-- 순서도
+
 <table>
   <thead>
     <tr align="center">
@@ -214,9 +210,12 @@
     </td>
   </tr>
 </table>
+
 - Front-end 구성
+  
 ![Image](https://github.com/user-attachments/assets/f5d6bb63-4ede-499a-8f5b-f68162d42f38)
 - Front-end DB Table
+  
 ![Image](https://github.com/user-attachments/assets/b5329f39-639c-4574-bd7a-31ecafb2a5d9)
 
 ## 8.시연
