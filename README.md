@@ -333,6 +333,6 @@
 - L298n모터 드라이브 .fzpz파일 – https://forum.fritzing.org/t/h-bridge-with-l298n-motor-driver/7711
 - 조도센서 모듈 .fzpz파일 - https://arduinomodules.info/download/ky-018-photoresistor-module-zip-file/
 - 팬모터 .fzpz파일 - https://forum.fritzing.org/t/l9110-h-bridge-module/3110
-
-
+## 수상
+![Image](https://github.com/user-attachments/assets/f28c19e3-4f31-4263-9af2-34c1c34721a8)
 
